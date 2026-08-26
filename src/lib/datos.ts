@@ -85,13 +85,18 @@ export type CampoEnBanda = CampoDef & { sub?: string }
  */
 export function bandas(m: ModuloDef): { banda: Banda; campos: CampoEnBanda[] }[] {
   const acc = new Map<Banda, CampoEnBanda[]>()
+  // Una etiqueta `sec` pertenece a la banda del primer campo que la sigue. Al
+  // reagrupar, los campos que caen en otra banda la pierden: «Captura visual»
+  // encima del botón de la IA no dice nada.
+  const casa = new Map<string, Banda>()
   let sec: string | undefined
   for (const c of m.campos) {
     if (c.sec) { sec = c.sec; continue }
     if (!c.t) continue
     const b = bandaDe(c)
+    if (sec && !casa.has(sec)) casa.set(sec, b)
     const lista = acc.get(b) ?? []
-    lista.push({ ...c, sub: sec })
+    lista.push({ ...c, sub: sec && casa.get(sec) === b ? sec : undefined })
     acc.set(b, lista)
   }
   // El botón de la IA va al inicio de estructura: pegado al final de la captura,
