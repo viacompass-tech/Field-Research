@@ -1,0 +1,916 @@
+[
+  {
+    "code": "M0",
+    "id": "caso",
+    "nn": [
+      "Explicar el consentimiento en sus términos y obtenerlo antes de registrar nada",
+      "Verificar la frontera de T1: el sujeto es el negocio como unidad, no el ingreso de la persona",
+      "Acordar cómo se anonimiza y qué pasa con las fotos",
+      "Definir la compensación o reciprocidad antes de empezar",
+      "Pedir permiso explícito para fotografiar"
+    ],
+    "nombre": "La visita",
+    "dur": "3 min",
+    "obj": "Solo lo que ubica esta visita en el tiempo y el espacio. La entidad ya viene de Escritorio: acá no se repite.",
+    "campos": [
+      {
+        "id": "sub",
+        "t": "select",
+        "l": "Sub-segmento",
+        "req": true,
+        "meta": "sub",
+        "cat": true,
+        "opts": [
+          "Bodega / abarrotes",
+          "Minimarket",
+          "Puesto de mercado",
+          "Ambulante con puesto fijo",
+          "Ambulante móvil",
+          "Tienda naturista / orgánica",
+          "Juguería o snacks",
+          "Panadería",
+          "Restaurante o menú",
+          "Botica o farmacia",
+          "Peluquería o barbería",
+          "Taller mecánico",
+          "Taller de calzado o costura",
+          "Lavandería",
+          "Ferretería",
+          "Librería o bazar",
+          "Comercio social (WhatsApp, redes)",
+          "Oficios móviles (gasfitero, electricista)",
+          "Productor o feriante",
+          "Proveedor de empresa ancla (B2B)",
+          "Servicio a domicilio",
+          "Otro"
+        ]
+      },
+      {
+        "id": "zona",
+        "t": "text",
+        "l": "Zona",
+        "req": true,
+        "meta": "zona",
+        "ph": "Distrito, mercado, cuadra"
+      },
+      {
+        "id": "estado",
+        "t": "select",
+        "l": "Estado de la unidad",
+        "req": true,
+        "cat": true,
+        "opts": [
+          "Operando",
+          "En pausa",
+          "Cerrado",
+          "Cerrado y reabierto",
+          "Operando tras haber quebrado antes"
+        ],
+        "help": "Deja abierta la puerta al análisis de supervivencia más adelante."
+      },
+      {
+        "id": "b_dias_contacto",
+        "t": "tally",
+        "l": "Días desde el primer contacto",
+        "base": true
+      }
+    ],
+    "brief": true
+  },
+  {
+    "code": "M1",
+    "id": "entorno",
+    "nn": [
+      "Llegar y observar antes de hablar con nadie",
+      "Cubrir al menos dos franjas horarias distintas del mismo lugar",
+      "Contar caminando los 100 metros, no estimar desde un punto fijo",
+      "Anotar la hora exacta de inicio y fin de cada ventana"
+    ],
+    "nombre": "Entorno · la cuadra",
+    "dur": "45–60 min",
+    "ai": "entorno",
+    "obj": "El territorio alrededor, no el negocio. Quién más está en la cuadra, qué flujos la cruzan, qué ritmo tiene. Se hace antes de acercarse a la puerta: mezclar entorno y unidad es el error más común en etnografía comercial.",
+    "mira": [
+      "Cómo se ve la cuadra: ancho, vereda, luz, ruido, tráfico, qué la limita",
+      "Qué otros negocios hay y de qué rubro: quién compite y quién complementa",
+      "Quiénes circulan: vecinos, escolares, trabajadores, ambulantes, moto-taxis, cobradores",
+      "Qué flujos la cruzan y de dónde vienen: paradero, mercado, colegio, avenida",
+      "Qué eventos marcan el ritmo de la zona",
+      "Dónde se junta la gente y dónde nadie se detiene",
+      "Qué se siente en el ambiente y en qué momento cambia"
+    ],
+    "guard": [
+      "Nada de conversación todavía: contamina lo que viene después.",
+      "Cuenta lo que se pueda contar. Un número mal contado se corrige; una impresión no.",
+      "Vuelve en otra franja. A las 6am, 3pm y 9pm la misma cuadra es otro negocio."
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Lo que viste en la cuadra",
+        "req": true,
+        "ph": "Escribe corrido. Todavía sin entrar al negocio."
+      },
+      { "sec": "Baseline de zona" },
+      {
+        "id": "b_negocios",
+        "t": "tally",
+        "l": "Negocios en la cuadra",
+        "base": true,
+        "help": "Camina 100 metros y toca por cada negocio."
+      },
+      {
+        "id": "b_digital",
+        "t": "tally",
+        "l": "De esos, cuántos aceptan pago digital",
+        "of": "b_negocios",
+        "base": true,
+        "help": "Sticker de Yape o Plin a la vista, POS, QR pegado."
+      },
+      {
+        "id": "b_flujo",
+        "t": "tally",
+        "l": "Personas que pasan",
+        "timer": 600,
+        "base": true,
+        "help": "Inicia la ventana de 10 minutos y toca por cada persona."
+      },
+      {
+        "id": "b_actores",
+        "t": "tally",
+        "l": "Actores no obvios",
+        "base": true,
+        "help": "Ambulantes, moto-taxis, jaladores, prestamistas, proveedores en ruta."
+      },
+      {
+        "id": "franja",
+        "t": "text",
+        "l": "Franjas observadas",
+        "band": "ficha",
+        "ph": "06:30–08:00 · 17:00–19:00"
+      },
+      { "sec": "Captura visual" },
+      {
+        "id": "fotos",
+        "t": "checks",
+        "l": "Checklist de captura visual",
+        "req": true,
+        "opts": [
+          "La cuadra desde ambos extremos",
+          "Calle en hora pico",
+          "Negocios vecinos",
+          "Flujo de personas",
+          "Infraestructura (vereda, luz, agua)",
+          "Paradero o punto de llegada más cercano"
+        ]
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      { "sec": "Estructura" },
+      { "id": "nine", "t": "nine", "l": "Dimensiones de la cuadra", "ai": true },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true },
+      {
+        "id": "hipotesis",
+        "t": "textarea",
+        "l": "Primera hipótesis, después de estar ahí",
+        "help": "Ahora sí: qué crees que está pasando tras el día 0. Se contrasta en el cierre — ese delta es la medida de sesgo del equipo."
+      }
+    ]
+  },
+  {
+    "code": "M2",
+    "id": "negocio",
+    "nn": [
+      "Describir el negocio antes de interpretar por qué es así",
+      "Contrastar el horario publicado con el horario real de hoy",
+      "Fotografiar la fachada completa desde la vereda"
+    ],
+    "nombre": "El negocio por fuera",
+    "dur": "30 min",
+    "ai": "negocio",
+    "obj": "La unidad misma, vista desde afuera y antes de hablar: qué es, qué vende, cómo se presenta y qué promete.",
+    "mira": [
+      "Qué tipo de negocio es y qué dice ser: rótulo, nombre, categoría declarada",
+      "Qué vende visible desde la vereda y qué no se ve",
+      "Cómo está organizado el frente: mostrador, vitrina, exhibición, cola",
+      "Qué precios están expuestos y cuáles no",
+      "Qué horario declara y a qué hora abrió o cerró realmente",
+      "Qué señales de pago hay a la vista",
+      "Estado del local: pintura, letrero, limpieza, infraestructura"
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Descripción del negocio",
+        "req": true,
+        "ph": "Qué es, qué vende, cómo se ve, qué promete. Sin interpretar todavía."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del negocio" },
+      {
+        "id": "b_horario",
+        "t": "text",
+        "l": "Horario declarado vs. real",
+        "band": "ficha",
+        "ph": "Publica 9–21 · abrió 9:40"
+      },
+      {
+        "id": "medios",
+        "t": "checks",
+        "l": "Medios de pago visibles",
+        "opts": [
+          "Sticker Yape",
+          "Sticker Plin",
+          "POS de banco",
+          "QR impreso",
+          "Cartel de solo efectivo",
+          "Ninguno visible"
+        ]
+      },
+      { "t": "aiblock" },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M3",
+    "id": "operacion",
+    "nn": [
+      "Mantener posición fija toda la ventana, sin interactuar",
+      "Cronometrar al menos tres transacciones, no una",
+      "Registrar al menos una desviación del patrón, con su hora",
+      "Contar los pagos con celular en el momento, no reconstruirlos después"
+    ],
+    "nombre": "Operación observada",
+    "dur": "30 min mínimo",
+    "ai": "operacion",
+    "obj": "Ahora el negocio funcionando. Posición fija, sin interactuar, contando. Es la única data que no pasa por tu presencia declarada.",
+    "mira": [
+      "La secuencia completa de una transacción, de principio a fin",
+      "Qué se repite y qué la rompe",
+      "Cómo paga la gente y qué pasa cuando el pago falla",
+      "Quién más interviene en la venta",
+      "Qué hace el dueño cuando no hay clientes"
+    ],
+    "guard": [
+      "Si alguien te habla, el bloque se corta y se anota.",
+      "Lo que rompe el patrón vale más que el patrón: anótalo con hora."
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Lo que viste",
+        "req": true,
+        "ph": "Transacciones, tiempos, quiebres del patrón, con hora cuando puedas."
+      },
+      { "sec": "Baseline de operación" },
+      {
+        "id": "b_trans",
+        "t": "tally",
+        "l": "Transacciones",
+        "timer": 1800,
+        "base": true,
+        "help": "Inicia la ventana de 30 minutos y toca por cada venta."
+      },
+      {
+        "id": "b_transdig",
+        "t": "tally",
+        "l": "De esas, cuántas pagaron con celular",
+        "of": "b_trans",
+        "base": true,
+        "help": "Se contrasta después con lo que él declara."
+      },
+      {
+        "id": "b_cola",
+        "t": "tally",
+        "l": "Máximo de personas esperando",
+        "base": true,
+        "help": "Sube el contador solo cuando la cola supere el récord anterior."
+      },
+      {
+        "id": "b_dur",
+        "t": "chrono",
+        "l": "Duración de una transacción",
+        "base": true,
+        "help": "Toca al empezar y al terminar. Hazlo varias veces: el promedio sale solo."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      { "sec": "Estructura" },
+      {
+        "id": "procesos",
+        "t": "tagged",
+        "l": "Procesos observados",
+        "tkey": "procesos",
+        "ai": true,
+        "ph": "Proceso como lo llama la gente",
+        "cols": [
+          {
+            "id": "sop",
+            "l": "Soporte",
+            "opts": ["Memoria", "Papel", "Celular", "App", "Mixto"]
+          },
+          {
+            "id": "quien",
+            "l": "Quién puede hacerlo",
+            "opts": [
+              "Solo el dueño",
+              "Dueño y familiar",
+              "Cualquiera del negocio",
+              "Está delegado"
+            ]
+          }
+        ]
+      },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M4",
+    "id": "incognito",
+    "nn": [
+      "Declararse investigador al terminar el contacto",
+      "Ofrecer retirar los datos si la persona no accede",
+      "No escribir conclusiones sobre quién es la persona en este módulo"
+    ],
+    "nombre": "Contacto incógnito",
+    "dur": "15 min",
+    "opcional": true,
+    "ai": "simple",
+    "obj": "Compra real con tareas fijas para medir fricción. Al terminar te declaras.",
+    "campos": [
+      {
+        "id": "tareas",
+        "t": "checks",
+        "l": "Tareas ejecutadas",
+        "opts": [
+          "Preguntar precio",
+          "Pedir algo que no tenga",
+          "Pedir descuento o fiado",
+          "Pagar con medio digital",
+          "Pedir boleta"
+        ]
+      },
+      {
+        "id": "b_atencion",
+        "t": "chrono",
+        "l": "Tiempo hasta ser atendido",
+        "base": true,
+        "help": "Inicia al llegar al mostrador, detén cuando te miren."
+      },
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Qué pasó",
+        "ph": "Fricciones, respuestas literales, gestos."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M5",
+    "id": "conversacion",
+    "nn": [
+      "Pedir permiso para anotar o grabar antes de empezar",
+      "Anotar al menos tres verbatims literales durante la conversación, no después",
+      "Preguntar cómo decide, nunca cuánto gana",
+      "Reconstruir un caso real concreto, no una generalidad",
+      "Preguntar qué pasó la última vez que faltó una semana",
+      "Dejar la sonda de exposición fiscal para el final de la sesión",
+      "Escribir la captura el mismo día"
+    ],
+    "nombre": "Conversación",
+    "dur": "60–90 min",
+    "ai": "persona",
+    "obj": "Una conversación, no un cuestionario. Escribe después lo que recuerdes, pega los verbatims que anotaste y deja que la IA arme el mapa: dice, hace, piensa, siente, ve, escucha, dolores, ganancias.",
+    "mira": [
+      "Cómo llegó hasta acá: qué heredó, qué rompió, qué intentó antes",
+      "Cómo decide: precios, a quién le fía, cuándo repone, con qué plata",
+      "Quién más vive de este negocio y dónde se mezcla la plata de la casa",
+      "A quién acude cuando algo se rompe: le presta, le fía, lo informa",
+      "Qué pasó la última vez que faltó una semana",
+      "Qué siente cuando le dicen que su venta digital deja registro — al final, nunca al inicio"
+    ],
+    "guard": [
+      "Nunca preguntes cuánto gana. Pregunta cómo decide.",
+      "Anota verbatims mientras hablas: es lo único que no se reconstruye de memoria.",
+      "Cuando quieras explicar por qué hace algo, no lo expliques: pregunta otra vez."
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Cómo fue la conversación",
+        "req": true,
+        "ph": "Corrido, como lo cuentes a un colega al salir."
+      },
+      {
+        "id": "verbatims",
+        "t": "repeat",
+        "l": "Verbatims literales",
+        "min": 3,
+        "ph": "\"…\" palabras exactas"
+      },
+      { "sec": "Baseline de la unidad" },
+      { "id": "b_anios", "t": "tally", "l": "Años operando", "base": true },
+      {
+        "id": "b_personas",
+        "t": "tally",
+        "l": "Personas que sostienen la unidad",
+        "base": true,
+        "help": "Incluye a quien ayuda sin cobrar."
+      },
+      {
+        "id": "b_horizonte",
+        "t": "select",
+        "l": "Horizonte de planificación",
+        "base": true,
+        "cat": true,
+        "opts": ["El día", "La semana", "El mes", "El año", "Más de un año"]
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      { "sec": "Estructura" },
+      {
+        "id": "empathy",
+        "t": "empathy",
+        "l": "Mapa del sujeto y de quienes lo rodean",
+        "ai": true
+      },
+      {
+        "id": "intenciones",
+        "t": "tagged",
+        "l": "Intenciones",
+        "tkey": "intenciones",
+        "ai": true,
+        "ph": "Quiere lograr… (sin nombrar productos)",
+        "cols": [
+          {
+            "id": "fuente",
+            "l": "Fuente",
+            "opts": ["Declarada", "Inferida de conducta", "Contradictoria"]
+          },
+          {
+            "id": "actor",
+            "l": "Actor",
+            "opts": ["Sujeto", "Cliente", "Proveedor", "Familia", "Colectivo"]
+          },
+          {
+            "id": "horiz",
+            "l": "Horizonte",
+            "opts": ["Inmediato", "Mes", "Año", "Vida"]
+          }
+        ]
+      },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M6",
+    "id": "clientes",
+    "nn": [
+      "Hablar con al menos dos clientes, siempre aparte del dueño",
+      "Preguntar a cada uno por qué le compra a él y no al de al lado",
+      "Registrar al menos una cosa que el cliente dice y el dueño no sabe",
+      "Preguntar qué haría si el negocio cierra mañana"
+    ],
+    "nombre": "Sus clientes y su entorno",
+    "dur": "20 min por persona",
+    "ai": "actores",
+    "obj": "Hablar aparte con quienes le compran y con quien lo abastece. Lo que el dueño cree de su cliente casi nunca coincide con lo que el cliente dice — y esa brecha suele ser la oportunidad.",
+    "mira": [
+      "Por qué le compra a él y no al de al lado",
+      "Qué le falta y resuelve en otro lado",
+      "Qué haría si mañana cierra",
+      "Cómo le paga y por qué de esa forma",
+      "Qué le ha oído decir sobre su propio negocio"
+    ],
+    "guard": [
+      "Aparte del dueño, nunca delante. La respuesta cambia por completo.",
+      "Con dos clientes ya tienes contraste; con ninguno tienes un retrato, no un sistema."
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Qué dijeron",
+        "req": true,
+        "ph": "Un párrafo por persona: quién es, qué dijo, qué hacía mientras hablaba."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      { "id": "empathy", "t": "empathy", "l": "Mapa por actor", "ai": true },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M7",
+    "id": "shadowing",
+    "nn": [
+      "Elegir un momento crítico concreto, no un día genérico",
+      "Anotar con hora mientras ocurre, no de memoria al salir",
+      "Registrar al menos una contradicción entre lo dicho y lo hecho",
+      "Preguntar por cada tarea observada quién más sabe hacerla"
+    ],
+    "nombre": "Acompañamiento",
+    "dur": "2–4 h · momento crítico",
+    "ai": "shadow",
+    "obj": "Estar al lado en el momento que importa. Aquí se ve si lo que contó en M4 es lo que hace.",
+    "mira": [
+      "Apertura, reposición, cobranza, cuadre de caja, hora pico o cierre — uno, no \"un día típico\"",
+      "Cuántas veces lo interrumpen y quién",
+      "Qué hace cuando algo se sale de lo previsto",
+      "Qué toca, qué anota, a quién llama"
+    ],
+    "guard": [
+      "Registra al menos una contradicción concreta con lo que dijo en la conversación.",
+      "Anota con hora."
+    ],
+    "campos": [
+      {
+        "id": "momento",
+        "t": "select",
+        "l": "Momento observado",
+        "cat": true,
+        "opts": [
+          "Apertura",
+          "Reposición",
+          "Cobranza o fiado",
+          "Cuadre de caja",
+          "Hora pico",
+          "Cierre"
+        ]
+      },
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Lo que pasó",
+        "req": true,
+        "ph": "Con horas cuando puedas. Incluye lo que contradice lo que te contó."
+      },
+      {
+        "id": "b_interrup",
+        "t": "tally",
+        "l": "Interrupciones a la tarea principal",
+        "base": true,
+        "help": "Toca cada vez que algo lo saque de lo que estaba haciendo."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      {
+        "id": "procesos",
+        "t": "tagged",
+        "l": "Procesos observados",
+        "tkey": "procesos",
+        "ai": true,
+        "ph": "Proceso como lo llama la gente",
+        "cols": [
+          {
+            "id": "sop",
+            "l": "Soporte",
+            "opts": ["Memoria", "Papel", "Celular", "App", "Mixto"]
+          },
+          {
+            "id": "quien",
+            "l": "Quién puede hacerlo",
+            "opts": [
+              "Solo el dueño",
+              "Dueño y familiar",
+              "Cualquiera del negocio",
+              "Está delegado"
+            ]
+          }
+        ]
+      },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M8",
+    "id": "artefactos",
+    "nn": [
+      "Pedir permiso por cada artefacto antes de fotografiarlo",
+      "Fotografiar tal como está, sin pedir que lo ordenen",
+      "Anotar qué NO existe: la ausencia de registro es un dato"
+    ],
+    "nombre": "Artefactos y herramientas",
+    "dur": "30 min",
+    "ai": "artefactos",
+    "obj": "El cuaderno de fiado delata la lógica operativa mejor que cualquier respuesta. Fotografía todo y describe lo que ves en el papel.",
+    "mira": [
+      "Qué columnas tiene el cuaderno, qué anota y qué no",
+      "Dónde guarda el efectivo y cómo lo separa",
+      "Qué apps tiene abiertas y cuáles usa de verdad",
+      "Qué hay en los chats con el proveedor",
+      "Qué no existe: eso también es dato"
+    ],
+    "guard": [
+      "Fotografía tal como está. No pidas que lo ordenen: el desorden es data.",
+      "Permiso explícito por cada artefacto: un cuaderno de deudas tiene datos de terceros."
+    ],
+    "campos": [
+      {
+        "id": "arte",
+        "t": "checks",
+        "l": "Artefactos encontrados",
+        "opts": [
+          "Cuaderno de fiado o cuentas",
+          "Lista de precios a mano",
+          "Registro de inventario",
+          "Chats con proveedores",
+          "Apps en el celular",
+          "Comprobantes guardados",
+          "Calendario o agenda",
+          "Lugar donde guarda el efectivo",
+          "Ninguno"
+        ]
+      },
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Qué revelan",
+        "req": true,
+        "ph": "Describe el artefacto como si el que lee no lo pudiera ver."
+      },
+      { "id": "fotos_up", "t": "fotos", "l": "Fotos del caso" },
+      { "t": "aiblock" },
+      {
+        "id": "herramientas",
+        "t": "tagged",
+        "l": "Herramientas en uso real",
+        "tkey": "herramientas",
+        "ai": true,
+        "ph": "Nombre exacto",
+        "cols": [
+          {
+            "id": "cat",
+            "l": "Categoría",
+            "opts": [
+              "Papel",
+              "Mensajería",
+              "Pago digital",
+              "Banca",
+              "Marketplace",
+              "Redes",
+              "Gestión",
+              "Hardware",
+              "Otro"
+            ]
+          },
+          {
+            "id": "frec",
+            "l": "Frecuencia",
+            "opts": [
+              "Cada transacción",
+              "Diaria",
+              "Semanal",
+              "Mensual",
+              "Excepcional"
+            ]
+          },
+          {
+            "id": "capa",
+            "l": "Capa del sistema",
+            "opts": [
+              "Identidad económica",
+              "Herramientas de gestión",
+              "Acceso a mercado",
+              "Protección",
+              "Crédito",
+              "No aplica"
+            ]
+          }
+        ]
+      },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M9",
+    "id": "sistema",
+    "nn": [
+      "Registrar al menos cinco actores, incluidos los informales",
+      "Marcar la dirección de cada flujo, no solo el vínculo",
+      "Identificar al menos un punto de quiebre",
+      "Preguntar por cada actor crítico qué pasa exactamente si desaparece mañana"
+    ],
+    "nombre": "Sistema y flujos",
+    "dur": "40 min · mismo día",
+    "ai": "sistema",
+    "obj": "Un negocio no es una unidad aislada: es un nodo. Acá se registra qué corre entre él y los demás — dinero, mercadería, información, confianza, permisos, trabajo — y en qué dirección. Es la capa que convierte casos sueltos en un sistema legible.",
+    "mira": [
+      "De quién recibe mercadería y bajo qué condición: al contado, a consignación, fiado",
+      "De quién recibe dinero antes de vender y a quién le debe",
+      "Quién le avisa cuándo subir precios o qué se está vendiendo",
+      "Quién responde por él si algo falla: gremio, junta, familia, casero",
+      "Quién le da o le quita permiso para operar donde opera",
+      "Qué actor, si desaparece mañana, le rompe la operación en menos de una semana"
+    ],
+    "guard": [
+      "Cada flujo tiene dirección. No es lo mismo depender que ser dependido: márcalo.",
+      "Marca crítico solo si su ausencia rompe la operación en menos de una semana. Si todo es crítico, nada lo es.",
+      "Incluye actores informales: prestamista, junta, casero, municipal, jalador, transportista.",
+      "La capa del sistema que llena cada actor es lo que después responde la pregunta del territorio: quién es hoy el sistema operativo de este negocio."
+    ],
+    "campos": [
+      {
+        "id": "cap",
+        "t": "cap",
+        "l": "Cómo se conecta con los demás",
+        "ph": "De quién depende, quién depende de él, qué corre en cada dirección."
+      },
+      { "t": "aiblock" },
+      {
+        "id": "flujos",
+        "t": "tagged",
+        "l": "Flujos",
+        "tkey": "flujos",
+        "ai": true,
+        "ph": "Actor — qué corre entre ellos",
+        "cols": [
+          {
+            "id": "tipo",
+            "l": "Qué fluye",
+            "opts": [
+              "Dinero",
+              "Mercadería",
+              "Información",
+              "Confianza",
+              "Permiso",
+              "Trabajo"
+            ]
+          },
+          {
+            "id": "sentido",
+            "l": "Dirección",
+            "opts": ["Lo recibe", "Lo entrega", "En ambos sentidos"]
+          },
+          {
+            "id": "critico",
+            "l": "Criticidad",
+            "opts": ["Crítico", "Reemplazable", "Ocasional"]
+          },
+          {
+            "id": "capa",
+            "l": "Capa que cubre",
+            "opts": [
+              "Identidad económica",
+              "Herramientas de gestión",
+              "Acceso a mercado",
+              "Protección",
+              "Crédito",
+              "No aplica"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "loops",
+        "t": "tagged",
+        "l": "Círculos observados",
+        "tkey": "loops",
+        "ai": true,
+        "ph": "A hace que B, que hace que A…",
+        "cols": [
+          {
+            "id": "tipo",
+            "l": "Tipo",
+            "opts": ["Refuerza (bola de nieve)", "Equilibra (se frena solo)"]
+          },
+          {
+            "id": "efecto",
+            "l": "Efecto neto",
+            "opts": ["Sostiene el negocio", "Lo desgasta", "Depende del momento"]
+          }
+        ]
+      },
+      { "id": "mapa", "t": "mapa", "l": "Mapa del caso", "ai": true },
+      { "id": "interp", "t": "interp", "l": "Interpretación", "ai": true }
+    ]
+  },
+  {
+    "code": "M10",
+    "id": "cierre",
+    "nn": [
+      "Cerrar el módulo el mismo día del campo",
+      "Marcar los seis supuestos del territorio, incluidos los que no se pudieron ver",
+      "Dejar al menos una pregunta emergente",
+      "Marcar como triangulado solo lo que tenga dos fuentes distintas"
+    ],
+    "nombre": "Cierre y estado",
+    "dur": "60 min · mismo día",
+    "ai": "cierre",
+    "obj": "El mismo día del campo. A las 48 horas se pierde cerca del 40% del detalle. Acá lo capturado se traduce a hallazgos y a las nueve dimensiones del estado del negocio. No es una medición nueva: es la síntesis de todo lo anterior.",
+    "campos": [
+      { "t": "aiblock" },
+      {
+        "id": "salud",
+        "t": "scale",
+        "pfx": "s0_",
+        "l": "Estado del negocio",
+        "ai": true,
+        "help": "La traducción de todo lo capturado hoy a nueve dimensiones comparables. La IA propone puntuaciones citando de dónde las saca; si algo no se observó, queda vacío."
+      },
+      {
+        "id": "ovpre",
+        "t": "openvars",
+        "mode": "pre",
+        "l": "Variables abiertas",
+        "help": "Las que el equipo creó desde Análisis. Si el campo te obligó a medir algo nuevo, se crea allá y aparece acá."
+      },
+      { "id": "hallazgos", "t": "findings", "l": "Hallazgos y triangulación", "ai": true },
+      { "id": "supuestos", "t": "supuestos", "l": "Supuestos del territorio" },
+      {
+        "id": "preguntas",
+        "t": "tagged",
+        "l": "Preguntas que abrió este caso",
+        "tkey": "preguntas",
+        "ai": true,
+        "ph": "Pregunta que el protocolo no cubría…",
+        "cols": [
+          {
+            "id": "alcance",
+            "l": "Alcance",
+            "opts": ["Solo este caso", "Este sub-segmento", "Todo el territorio"]
+          },
+          {
+            "id": "estado",
+            "l": "Estado",
+            "opts": ["Abierta", "En prueba", "Respondida"]
+          }
+        ]
+      },
+      {
+        "id": "huerfanos",
+        "t": "tagged",
+        "l": "Lo que el escritorio no vio venir",
+        "tkey": "huerfanos",
+        "ai": true,
+        "ph": "Hallazgo de campo que ninguna hipótesis previa anticipaba…",
+        "help": "La conversación va en dos direcciones. Esto vuelve al desk research como encargo: qué tiene que ir a investigar ahora que el campo lo destapó.",
+        "cols": [
+          {
+            "id": "tipo",
+            "l": "Tipo",
+            "opts": [
+              "Actor no mapeado",
+              "Práctica no prevista",
+              "Cifra que contradice el escritorio",
+              "Riesgo nuevo",
+              "Oportunidad nueva"
+            ]
+          },
+          {
+            "id": "accion",
+            "l": "Qué hacer",
+            "opts": [
+              "Investigar en escritorio",
+              "Verificar en el próximo caso",
+              "Cambiar el instrumento",
+              "Descartar"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "senales",
+        "t": "tagged",
+        "l": "Señales de futuro",
+        "tkey": "senales",
+        "ai": true,
+        "ph": "Conducta marginal observada…",
+        "cols": [
+          {
+            "id": "tipo",
+            "l": "Tipo",
+            "opts": [
+              "Comportamiento",
+              "Herramienta",
+              "Regla informal",
+              "Actor nuevo",
+              "Lenguaje"
+            ]
+          },
+          {
+            "id": "fuerza",
+            "l": "Fuerza",
+            "opts": [
+              "Anecdótica",
+              "Repetida en el caso",
+              "Vista en otros casos"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contraste",
+        "t": "textarea",
+        "l": "Contraste con tu hipótesis de M1",
+        "help": "Qué se cayó de lo que creíste después del día 0."
+      }
+    ]
+  }
+]

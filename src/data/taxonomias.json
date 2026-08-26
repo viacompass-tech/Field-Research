@@ -1,0 +1,177 @@
+{
+  "territorio": {
+    "n": "El sistema operativo del comercio informal",
+    "pregunta": "¿Puede el banco ser el sistema operativo del comercio informal —identidad económica, gestión, mercado y protección— y no solo su prestamista?",
+    "frontera": "Es T1 cuando el sujeto es el NEGOCIO como unidad (inventario, local, capital de trabajo). Si el foco es el flujo de ingreso de la persona, es T4; si es un excluido sin acceso, T5; si es un colectivo de negocios, T2.",
+    "riesgo": "Tensión SUNAT: el micronegocio teme que la visibilidad financiera se vuelva visibilidad fiscal. Es el riesgo estructural del territorio y se sondea siempre al final, nunca al inicio.",
+    "sub": [
+      "Bodega / abarrotes",
+      "Minimarket",
+      "Puesto de mercado",
+      "Ambulante con puesto fijo",
+      "Ambulante móvil",
+      "Tienda naturista / orgánica",
+      "Juguería o snacks",
+      "Panadería",
+      "Restaurante o menú",
+      "Botica o farmacia",
+      "Peluquería o barbería",
+      "Taller mecánico",
+      "Taller de calzado o costura",
+      "Lavandería",
+      "Ferretería",
+      "Librería o bazar",
+      "Comercio social (WhatsApp, redes)",
+      "Oficios móviles (gasfitero, electricista)",
+      "Productor o feriante",
+      "Proveedor de empresa ancla (B2B)",
+      "Servicio a domicilio",
+      "Otro"
+    ],
+    "supuestos": [
+      "El negocio que se opera solo sobrevive; el que depende del cuerpo del dueño, no.",
+      "La puerta de adopción es la gestión, no el crédito.",
+      "El crédito es una capa tardía que se desbloquea porque las capas de abajo crearon identidad y relación.",
+      "El micronegocio lee la visibilidad financiera como visibilidad fiscal y por eso se frena.",
+      "El modelo de crédito no aplica a servicios: no hay inventario que financiar.",
+      "El comercio social entra por identidad y reputación, no por crédito."
+    ]
+  },
+  "capas": [
+    "Identidad económica",
+    "Herramientas de gestión",
+    "Acceso a mercado",
+    "Protección",
+    "Crédito"
+  ],
+  "flujos": [
+    "Dinero",
+    "Mercadería",
+    "Información",
+    "Confianza",
+    "Permiso",
+    "Trabajo"
+  ],
+  "dimensiones_escenario": [
+    { "id": "espacio", "n": "Cómo se ve el espacio" },
+    { "id": "objetos", "n": "Qué elementos y objetos hay" },
+    { "id": "actores", "n": "Quiénes están" },
+    { "id": "actividades", "n": "Qué actividades ocurren" },
+    { "id": "dinamicas", "n": "Qué dinámicas hay entre ellos" },
+    { "id": "eventos", "n": "Qué eventos marcan el ritmo" },
+    { "id": "tiempo", "n": "Cómo se ordena el tiempo" },
+    { "id": "fines", "n": "Qué busca la gente ahí" },
+    { "id": "sentimientos", "n": "Qué se siente en el ambiente" }
+  ],
+  "dimensiones_percepcion": [
+    { "id": "dice", "n": "Dice" },
+    { "id": "hace", "n": "Hace" },
+    { "id": "piensa", "n": "Piensa" },
+    { "id": "siente", "n": "Siente" },
+    { "id": "ve", "n": "Ve" },
+    { "id": "escucha", "n": "Escucha" },
+    { "id": "dolores", "n": "Dolores" },
+    { "id": "ganancias", "n": "Ganancias" }
+  ],
+  "salud": [
+    {
+      "id": "auto",
+      "n": "Autonomía operativa",
+      "a": [
+        "Si falta, cierra ese día",
+        "Alguien cubre horas sueltas",
+        "Alguien cubre un día completo",
+        "Puede ausentarse una semana",
+        "Opera sin el dueño de forma sostenida"
+      ]
+    },
+    {
+      "id": "caja",
+      "n": "Separación de cajas",
+      "a": [
+        "Una sola caja, física y mental",
+        "Separa mentalmente, no físicamente",
+        "Separa a veces",
+        "Cuentas o sobres distintos siempre",
+        "Se paga un sueldo fijo"
+      ]
+    },
+    {
+      "id": "legib",
+      "n": "Legibilidad financiera",
+      "a": [
+        "No sabe si gana",
+        "Sabe ventas, no costos",
+        "Sabe el margen de sus principales",
+        "Registra sistemáticamente",
+        "Usa el registro para decidir"
+      ]
+    },
+    {
+      "id": "demanda",
+      "n": "Continuidad de demanda",
+      "a": [
+        "Todo cliente de paso",
+        "Recurrentes sin nombre",
+        "Conoce a sus recurrentes",
+        "Canal directo con ellos",
+        "Demanda anticipable"
+      ]
+    },
+    {
+      "id": "conc",
+      "n": "Concentración de riesgo",
+      "a": [
+        "Proveedor único sin alternativa",
+        "Alternativa teórica",
+        "Una alternativa probada",
+        "Varias activas",
+        "Rota por conveniencia"
+      ]
+    },
+    {
+      "id": "colchon",
+      "n": "Colchón de operación",
+      "a": [
+        "Menos de 3 días",
+        "Una semana",
+        "Dos semanas",
+        "Un mes",
+        "Más de un mes"
+      ]
+    },
+    {
+      "id": "capital",
+      "n": "Acceso a capital",
+      "a": [
+        "Solo prestamista informal",
+        "Familia",
+        "Junta o pandero",
+        "Crédito formal caro",
+        "Crédito formal a tiempo y razonable"
+      ]
+    },
+    {
+      "id": "adapta",
+      "n": "Capacidad de adaptación",
+      "a": [
+        "Nada cambió",
+        "Cambió por obligación",
+        "Probó algo una vez",
+        "Cambió algo estructural",
+        "Cambió y midió"
+      ]
+    },
+    {
+      "id": "exposicion",
+      "n": "Exposición asumida",
+      "a": [
+        "Evita todo rastro por miedo fiscal",
+        "Digital a medias",
+        "Digital sin pensarlo",
+        "Sabe que deja rastro y lo acepta",
+        "Usa la visibilidad a su favor"
+      ]
+    }
+  ]
+}
