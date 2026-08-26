@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { Cabecera } from '@/components/Cabecera'
+import { NombreEntidad, SinEntidad } from '@/components/Revision'
 import { MODULOS, progreso } from '@/lib/datos'
 import type { Datos } from '@/lib/tipos'
 import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
@@ -14,11 +15,12 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
   if (!hayConfig) {
     return (
       <>
-        <Cabecera sub="Modo revisión" />
+        <Cabecera sub={<NombreEntidad porDefecto="Modo revisión" />} />
         <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-4">
           <p className="text-[13px]" style={{ color: 'var(--orange)' }}>
             Nada de lo que toques acá se guarda.
           </p>
+          <SinEntidad />
           <ListaModulos visita={visita} capturas={new Map()} />
         </main>
       </>

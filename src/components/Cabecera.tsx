@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { salir } from '@/app/acciones'
 
-export function Cabecera({ nombre, sub }: { nombre?: string | null; sub?: string }) {
+export function Cabecera({ nombre, sub }: { nombre?: string | null; sub?: React.ReactNode }) {
   return (
     <header
       className="pegajoso top-0 border-b px-4 py-3"

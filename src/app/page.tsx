@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { CrearEntidadRevision } from '@/components/Revision'
 import { AvisoConfig, Cabecera } from '@/components/Cabecera'
 import { TAX } from '@/lib/datos'
 import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
@@ -28,9 +29,7 @@ export default async function Entidades() {
             <h1 className="mt-1 text-lg font-semibold">{TAX.territorio.n}</h1>
             <p className="mt-2 text-[14px]">{TAX.territorio.pregunta}</p>
           </section>
-          <Link className="boton boton-primario w-full" href="/v/revision">
-            Recorrer el instrumento
-          </Link>
+          <CrearEntidadRevision />
           <p className="text-[13px]" style={{ color: 'var(--ink-soft)' }}>
             Modo revisión: los once módulos se pintan y se pueden tocar, pero nada se
             guarda. Sirve para discutir el instrumento, no para salir a campo.

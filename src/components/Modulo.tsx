@@ -11,6 +11,7 @@ import { Campo, type Variable } from './campos/Campo'
 import { ContadoresExtra } from './campos/Contadores'
 import { BloqueIA } from './campos/IA'
 import { Hipotesis, type HipotesisFila } from './Hipotesis'
+import { NombreEntidad } from './Revision'
 
 export function Modulo({
   def,
@@ -87,7 +88,7 @@ export function Modulo({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <Link href={`/v/${visita}`} className="kicker enlace-suave">
-              ← {entidad.nombre}
+              ← {revision ? <NombreEntidad porDefecto="sin nombre" /> : entidad.nombre}
             </Link>
             <h1 className="truncate font-semibold leading-tight">
               {def.code} · {def.nombre}
