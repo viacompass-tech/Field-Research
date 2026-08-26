@@ -345,10 +345,21 @@ create policy fotos_equipo_borrado on storage.objects
 -- no encuentra a quién enganchar.
 --
 --   insert into equipos (nombre) values ('CIX Foresight Lab');
---   update perfiles set equipo_id = (select id from equipos limit 1)
+--
+--   update perfiles
+--      set equipo_id = (select id from equipos where nombre = 'CIX Foresight Lab')
 --    where correo = 'tu@correo.pe';
 --
--- Para sumar a alguien más al mismo equipo, después de su primer ingreso:
+-- Para sumar a alguien más, después de su primer ingreso:
 --
---   update perfiles set equipo_id = (select id from equipos limit 1)
---    where correo = 'agencia@ejemplo.pe';
+--   update perfiles
+--      set equipo_id = (select id from equipos where nombre = 'CIX Foresight Lab')
+--    where correo in ('otra@ejemplo.pe', 'tercera@ejemplo.pe');
+--
+-- Se nombra el equipo en vez de usar `limit 1` a propósito: con dos equipos,
+-- `limit 1` sin `order by` elige uno cualquiera y no avisa. Nombrarlo falla
+-- ruidosamente si hay ambigüedad, que es lo que uno quiere.
+--
+-- Y siempre comprobar, porque «ningún equipo» no da error, deja NULL callado:
+--
+--   select correo, equipo_id from perfiles;

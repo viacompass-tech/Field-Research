@@ -96,15 +96,37 @@ Ahora sí, en este orden:
    ```sql
    insert into equipos (nombre) values ('CIX Foresight Lab');
 
-   update perfiles set equipo_id = (select id from equipos limit 1)
+   update perfiles
+      set equipo_id = (select id from equipos where nombre = 'CIX Foresight Lab')
     where correo = 'tu@correo.pe';
+
+   select correo, equipo_id from perfiles;
    ```
+
+   El `select` del final no es decoración: si el equipo no existiera, el
+   `update` no falla — deja `equipo_id` en NULL y no dice nada. Un `equipo_id`
+   vacío en esa lista es la señal de que algo no cuadró.
+
+   Y se nombra el equipo en vez de escribir `limit 1` porque `limit 1` sin
+   `order by` no significa «el primero», significa «cualquiera»: el día que
+   haya dos equipos metería a la persona en uno al azar, callado.
 
 5. Recarga la aplicación. Ya puedes crear entidades.
 
-Para sumar a alguien más —otro recolector, la agencia— repite solo el paso 4 con
-su correo, **después** de que haya entrado una vez. Comparten equipo, así que ven
-las mismas entidades.
+Para sumar a alguien más —otro recolector, la agencia— **después** de que haya
+entrado una vez y visto el aviso naranja:
+
+```sql
+update perfiles
+   set equipo_id = (select id from equipos where nombre = 'CIX Foresight Lab')
+ where correo in ('otra@ejemplo.pe', 'tercera@ejemplo.pe');
+
+select correo, equipo_id from perfiles;
+```
+
+Todas deben quedar con el mismo `equipo_id`. Comparten equipo, así que ven las
+mismas entidades y visitas. Si alguna sale en NULL, el correo no coincide con el
+que usó para entrar: míralo en esa misma lista y cópialo tal cual.
 
 ## Comprobar que quedó
 
