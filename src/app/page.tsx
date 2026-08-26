@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { AvisoConfig, Cabecera } from '@/components/Cabecera'
+import { TAX } from '@/lib/datos'
 import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
 import { NuevaEntidad } from './NuevaEntidad'
 
@@ -20,7 +21,21 @@ export default async function Entidades() {
     return (
       <>
         <Cabecera />
-        <AvisoConfig que="Sin NEXT_PUBLIC_SUPABASE_URL ni NEXT_PUBLIC_SUPABASE_ANON_KEY no hay dónde guardar. Llena .env.local." />
+        <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-4">
+          <AvisoConfig que="Sin NEXT_PUBLIC_SUPABASE_URL ni NEXT_PUBLIC_SUPABASE_ANON_KEY no hay dónde guardar. Llena .env.local para capturar de verdad." />
+          <section className="tarjeta p-4">
+            <p className="kicker">Territorio 1</p>
+            <h1 className="mt-1 text-lg font-semibold">{TAX.territorio.n}</h1>
+            <p className="mt-2 text-[14px]">{TAX.territorio.pregunta}</p>
+          </section>
+          <Link className="boton boton-primario w-full" href="/v/revision">
+            Recorrer el instrumento
+          </Link>
+          <p className="text-[13px]" style={{ color: 'var(--ink-soft)' }}>
+            Modo revisión: los once módulos se pintan y se pueden tocar, pero nada se
+            guarda. Sirve para discutir el instrumento, no para salir a campo.
+          </p>
+        </main>
       </>
     )
   }

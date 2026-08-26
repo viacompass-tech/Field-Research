@@ -3,12 +3,28 @@ import { notFound, redirect } from 'next/navigation'
 import { Cabecera } from '@/components/Cabecera'
 import { MODULOS, progreso } from '@/lib/datos'
 import type { Datos } from '@/lib/tipos'
-import { clienteServidor, perfil } from '@/lib/supabase/servidor'
+import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
 
 export const dynamic = 'force-dynamic'
 
 export default async function IndiceVisita({ params }: { params: Promise<{ visita: string }> }) {
   const { visita } = await params
+
+  // Sin Supabase el índice existe igual, vacío: es la puerta al modo revisión.
+  if (!hayConfig) {
+    return (
+      <>
+        <Cabecera sub="Modo revisión" />
+        <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-4">
+          <p className="text-[13px]" style={{ color: 'var(--orange)' }}>
+            Nada de lo que toques acá se guarda.
+          </p>
+          <ListaModulos visita={visita} capturas={new Map()} />
+        </main>
+      </>
+    )
+  }
+
   const yo = await perfil()
   if (!yo) redirect('/login')
 
@@ -21,7 +37,6 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
   if (!data) notFound()
 
   const entidad = data.entidades as unknown as { id: string; nombre: string; zona: string | null }
-  type CapturaFila = { modulo: string; datos: Datos; no_negociables: number[]; estado: string }
   const capturas = new Map(
     ((data.capturas ?? []) as CapturaFila[]).map((c) => [c.modulo, c]),
   )
@@ -46,6 +61,27 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
           </span>
         </div>
 
+        <ListaModulos visita={visita} capturas={capturas} />
+
+        <div className="flex gap-2">
+          <a className="boton" href={`/api/exportar/${visita}?formato=md`}>Markdown</a>
+          <a className="boton" href={`/api/exportar/${visita}?formato=json`}>JSON</a>
+        </div>
+      </main>
+    </>
+  )
+}
+
+type CapturaFila = { modulo: string; datos: Datos; no_negociables: number[]; estado: string }
+
+function ListaModulos({
+  visita,
+  capturas,
+}: {
+  visita: string
+  capturas: Map<string, CapturaFila>
+}) {
+  return (
         <ul className="flex flex-col gap-3">
           {MODULOS.map((m) => {
             const c = capturas.get(m.id)
@@ -88,12 +124,5 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
             )
           })}
         </ul>
-
-        <div className="flex gap-2">
-          <a className="boton" href={`/api/exportar/${visita}?formato=md`}>Markdown</a>
-          <a className="boton" href={`/api/exportar/${visita}?formato=json`}>JSON</a>
-        </div>
-      </main>
-    </>
   )
 }
