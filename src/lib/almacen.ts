@@ -1,5 +1,6 @@
 'use client'
 
+import { leerRecolector } from '@/components/Recolector'
 import type { Datos } from './tipos'
 
 // El almacén de una captura. Existe para una sola cosa: que escribir en un
@@ -38,6 +39,8 @@ export type Carga = {
   datos: Datos
   no_negociables: number[]
   hueco: string | null
+  /** Quién está capturando, según el dispositivo. Sin sesión no hay otra firma. */
+  recolector: string | null
 }
 
 async function enviar(carga: Carga): Promise<void> {
@@ -158,6 +161,7 @@ export class Almacen {
       datos: this.datos,
       no_negociables: this.nn,
       hueco: this.hueco,
+      recolector: leerRecolector(),
     }
     this.publicar({ estado: 'guardando', error: null })
     try {

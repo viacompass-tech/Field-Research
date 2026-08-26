@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { CrearEntidadRevision } from '@/components/Revision'
-import { AvisoConfig, Cabecera } from '@/components/Cabecera'
+import { AvisoAbierto, AvisoConfig, Cabecera } from '@/components/Cabecera'
 import { TAX } from '@/lib/datos'
-import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
+import { clienteServidor, equipoActual, hayConfig } from '@/lib/supabase/servidor'
 import { NuevaEntidad } from './NuevaEntidad'
 
 export const dynamic = 'force-dynamic'
@@ -39,14 +38,12 @@ export default async function Entidades() {
     )
   }
 
-  const yo = await perfil()
-  if (!yo) redirect('/login')
-
-  if (!yo.equipo_id) {
+  const equipo = await equipoActual()
+  if (!equipo) {
     return (
       <>
-        <Cabecera nombre={yo.nombre} />
-        <AvisoConfig que="Tu usuario existe pero no está en ningún equipo. Corre el bloque de arranque que está al final de supabase/schema.sql con tu correo." />
+        <Cabecera />
+        <AvisoConfig que="No existe el equipo «CIX Foresight Lab» en la base. Corre supabase/acceso-abierto.sql, que lo crea si falta." />
       </>
     )
   }
@@ -61,8 +58,9 @@ export default async function Entidades() {
 
   return (
     <>
-      <Cabecera nombre={yo.nombre} sub={`${entidades.length} ${entidades.length === 1 ? 'entidad' : 'entidades'}`} />
+      <Cabecera sub={`${entidades.length} ${entidades.length === 1 ? 'entidad' : 'entidades'}`} />
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-4">
+        <AvisoAbierto />
         <NuevaEntidad />
         {error && (
           <p className="text-[13px]" style={{ color: 'var(--danger)' }}>{error.message}</p>

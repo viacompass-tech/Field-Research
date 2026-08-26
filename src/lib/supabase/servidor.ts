@@ -27,21 +27,18 @@ export async function clienteServidor() {
   )
 }
 
-export async function sesion() {
+/**
+ * Con acceso abierto ya no hay perfil del que colgar el equipo: se toma el
+ * único que existe. La jerarquía del modelo de datos no cambia —sigue habiendo
+ * un equipo dueño de las entidades— solo deja de decidir quién ve qué.
+ */
+export async function equipoActual(): Promise<string | null> {
   if (!hayConfig) return null
   const sb = await clienteServidor()
-  const { data } = await sb.auth.getUser()
-  return data.user ?? null
-}
-
-export async function perfil() {
-  const usuario = await sesion()
-  if (!usuario) return null
-  const sb = await clienteServidor()
   const { data } = await sb
-    .from('perfiles')
-    .select('id, nombre, correo, equipo_id, rol')
-    .eq('id', usuario.id)
+    .from('equipos')
+    .select('id')
+    .eq('nombre', 'CIX Foresight Lab')
     .maybeSingle()
-  return data ?? { id: usuario.id, nombre: usuario.email, correo: usuario.email, equipo_id: null, rol: 'lab' }
+  return (data?.id as string | undefined) ?? null
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { clienteServidor, sesion } from '@/lib/supabase/servidor'
+import { clienteServidor } from '@/lib/supabase/servidor'
 
 const Esquema = z.object({
   entidad: z.string().uuid(),
@@ -12,8 +12,6 @@ const Esquema = z.object({
 })
 
 export async function POST(req: Request) {
-  const usuario = await sesion()
-  if (!usuario) return NextResponse.json({ error: 'Sin sesión' }, { status: 401 })
   const cuerpo = Esquema.safeParse(await req.json())
   if (!cuerpo.success) {
     return NextResponse.json({ error: cuerpo.error.issues[0].message }, { status: 400 })

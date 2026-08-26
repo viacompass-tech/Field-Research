@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server'
 import { aMarkdown, type VisitaExport } from '@/lib/exportar'
 import type { Datos } from '@/lib/tipos'
-import { clienteServidor, sesion } from '@/lib/supabase/servidor'
+import { clienteServidor } from '@/lib/supabase/servidor'
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ visita: string }> },
 ) {
-  const usuario = await sesion()
-  if (!usuario) return NextResponse.json({ error: 'Sin sesión' }, { status: 401 })
   const { visita } = await params
   const formato = new URL(req.url).searchParams.get('formato') ?? 'md'
 

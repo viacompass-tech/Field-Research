@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { modulo as definicion, vacio } from '@/lib/datos'
 import type { Fila, Hallazgo, Puntuacion } from '@/lib/tipos'
-import { clienteServidor, sesion } from '@/lib/supabase/servidor'
+import { clienteServidor } from '@/lib/supabase/servidor'
 
 // Un solo endpoint para guardar una captura entera. Manda siempre el blob
 // completo: así la cola del modo avión es idempotente y no hay que resolver
@@ -14,17 +14,15 @@ const Esquema = z.object({
   datos: z.record(z.string(), z.unknown()),
   no_negociables: z.array(z.number().int()),
   hueco: z.string().nullable(),
+  recolector: z.string().nullable().optional(),
 })
 
 export async function POST(req: Request) {
-  const usuario = await sesion()
-  if (!usuario) return NextResponse.json({ error: 'Sin sesión' }, { status: 401 })
-
   const cuerpo = Esquema.safeParse(await req.json())
   if (!cuerpo.success) {
     return NextResponse.json({ error: cuerpo.error.issues[0].message }, { status: 400 })
   }
-  const { visita, modulo, datos, no_negociables, hueco } = cuerpo.data
+  const { visita, modulo, datos, no_negociables, hueco, recolector } = cuerpo.data
   const def = definicion(modulo)
   if (!def) return NextResponse.json({ error: `No existe el módulo ${modulo}` }, { status: 400 })
 
@@ -42,10 +40,26 @@ export async function POST(req: Request) {
   const { error } = await sb
     .from('capturas')
     .upsert(
-      { visita_id: visita, modulo, datos, no_negociables, hueco, estado },
+      {
+        visita_id: visita,
+        modulo,
+        datos: recolector ? { ...datos, __recolector: recolector } : datos,
+        no_negociables,
+        hueco,
+        estado,
+      },
       { onConflict: 'visita_id,modulo' },
     )
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
+
+  // La visita queda firmada por quien la trabajó primero.
+  if (recolector) {
+    await sb
+      .from('visitas')
+      .update({ recolector_nombre: recolector })
+      .eq('id', visita)
+      .is('recolector_nombre', null)
+  }
 
   // Lo que se consulta entre visitas vive además en su propia tabla.
   await materializar(visita, modulo, datos)

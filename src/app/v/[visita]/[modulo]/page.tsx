@@ -1,8 +1,8 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { Modulo } from '@/components/Modulo'
 import { modulo as definicion } from '@/lib/datos'
 import type { Datos, FotoRef } from '@/lib/tipos'
-import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
+import { clienteServidor, hayConfig } from '@/lib/supabase/servidor'
 import type { HipotesisFila } from '@/components/Hipotesis'
 
 export const dynamic = 'force-dynamic'
@@ -33,9 +33,6 @@ export default async function PantallaModulo({
       />
     )
   }
-
-  const yo = await perfil()
-  if (!yo) redirect('/login')
 
   const sb = await clienteServidor()
   const { data: fila } = await sb

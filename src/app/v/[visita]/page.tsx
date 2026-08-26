@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { Cabecera } from '@/components/Cabecera'
 import { NombreEntidad, SinEntidad } from '@/components/Revision'
 import { MODULOS, progreso } from '@/lib/datos'
 import type { Datos } from '@/lib/tipos'
-import { clienteServidor, hayConfig, perfil } from '@/lib/supabase/servidor'
+import { clienteServidor, hayConfig } from '@/lib/supabase/servidor'
 
 export const dynamic = 'force-dynamic'
 
@@ -27,9 +27,6 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
     )
   }
 
-  const yo = await perfil()
-  if (!yo) redirect('/login')
-
   const sb = await clienteServidor()
   const { data } = await sb
     .from('visitas')
@@ -51,7 +48,7 @@ export default async function IndiceVisita({ params }: { params: Promise<{ visit
 
   return (
     <>
-      <Cabecera nombre={yo.nombre} sub={`${entidad.nombre} · ${data.fecha}`} />
+      <Cabecera sub={`${entidad.nombre} · ${data.fecha}`} />
       <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-4">
         <div className="flex items-center justify-between gap-3">
           <Link href={`/e/${entidad.id}`} className="kicker enlace-suave">← visitas</Link>

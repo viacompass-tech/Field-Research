@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import * as z from 'zod/v4'
 import { modulo as definicion, TAX } from '@/lib/datos'
 import type { CampoDef, Datos, ModuloDef } from '@/lib/tipos'
-import { clienteServidor, sesion } from '@/lib/supabase/servidor'
+import { clienteServidor } from '@/lib/supabase/servidor'
 
 // La estructura la propone la IA, después. Lee la captura y las fotos de un
 // módulo y devuelve JSON validado. Nada se guarda desde acá: vuelve al cliente,
@@ -187,9 +187,6 @@ function instruccion(def: ModuloDef, campos: CampoDef[]): string {
 }
 
 export async function POST(req: Request) {
-  const usuario = await sesion()
-  if (!usuario) return NextResponse.json({ error: 'Sin sesión' }, { status: 401 })
-
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
       { error: 'Falta ANTHROPIC_API_KEY en el servidor. La estructura se puede llenar a mano.' },
