@@ -13,6 +13,7 @@ Fase actual: solo Campo.
 | `docs/03-ux-reglas.md` | reglas de interacción y por qué existen |
 | `docs/04-plan-de-build.md` | ocho pasos verificables |
 | `docs/05-arquitectura.md` | cómo está armado el código |
+| `docs/06-conectar-supabase.md` | del modo revisión al instrumento de verdad |
 | `supabase/schema.sql` | tablas, tipos y seguridad por fila |
 | `src/data/modulos-campo.json` | once módulos con sus campos, no negociables y sondas |
 | `src/data/taxonomias.json` | territorio, capas, flujos, dimensiones, sub-segmentos |

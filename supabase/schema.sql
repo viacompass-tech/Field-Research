@@ -308,7 +308,9 @@ create trigger on_auth_user_created after insert on auth.users
 
 -- ─────────────────────────────────────────────────────────── storage
 
--- Crear el bucket privado `fotos` antes de correr esto (Storage → New bucket).
+-- Esto crea el bucket privado `fotos`. Si tu proyecto no deja insertarlo desde
+-- el editor SQL, créalo a mano en Storage → New bucket, privado, y vuelve a
+-- correr el archivo.
 -- La ruta es <visita_id>/<modulo>/<uuid>.jpg: el primer segmento decide el acceso.
 insert into storage.buckets (id, name, public)
 values ('fotos', 'fotos', false)
@@ -337,8 +339,16 @@ create policy fotos_equipo_borrado on storage.objects
 
 -- ─────────────────────────────────────────────────────────── arranque
 --
--- Un equipo y el enganche del primer usuario. Correr una vez, con tu correo:
+-- Un equipo y el enganche del primer usuario. Va aparte y DESPUÉS de que esa
+-- persona haya entrado una vez por correo: la fila de `perfiles` la crea el
+-- disparador de arriba cuando nace el usuario de Auth. Antes de eso el update
+-- no encuentra a quién enganchar.
 --
 --   insert into equipos (nombre) values ('CIX Foresight Lab');
 --   update perfiles set equipo_id = (select id from equipos limit 1)
 --    where correo = 'tu@correo.pe';
+--
+-- Para sumar a alguien más al mismo equipo, después de su primer ingreso:
+--
+--   update perfiles set equipo_id = (select id from equipos limit 1)
+--    where correo = 'agencia@ejemplo.pe';
